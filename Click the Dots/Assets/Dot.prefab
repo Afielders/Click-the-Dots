@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5865410539091936183}
   - component: {fileID: 2215774728450592968}
   - component: {fileID: 6263426891102272771}
+  - component: {fileID: 1548539650572849226}
   m_Layer: 0
   m_Name: Dot
   m_TagString: Untagged
@@ -128,3 +129,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &1548539650572849226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135815851178089548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094ddc3b4392cd44da96e54e0da88391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Dot
