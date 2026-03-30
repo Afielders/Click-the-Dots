@@ -1,6 +1,7 @@
 using System.Threading;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameLogic : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GameLogic : MonoBehaviour
     private float game_timer =60; //In Seconds.
     public TMP_Text game_timer_text;
 
+    //Restart Button
+    public GameObject restart_button;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,13 +31,30 @@ public class GameLogic : MonoBehaviour
         dot_timer = 0.5f;
         //Set the default text at the beginning of the game.
         score_text.text = "Score: 0";
+
+        //Disable the restart button at the start of the game.
+        restart_button.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //***Game Timer***
+        //Count the game timer down and use the text to display the time left.
+        game_timer -= Time.deltaTime;
+        if(game_timer < 0)
+        {
+
+            game_timer = 0;
+            game_timer_text.text = "Time: 0";
+            restart_button.SetActive(true);
+            return;
+        }
+        game_timer_text.text = "Time: " + Mathf.Floor(game_timer);
+
         // Check if left mouse button was pressed.
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             //Convert the mouse position from screen space to world space.
             Vector2 worldpoint = Cam.ScreenToWorldPoint(Input.mousePosition);
@@ -41,7 +62,7 @@ public class GameLogic : MonoBehaviour
             //Shoot out a ray at the world point and store in hit.
             RaycastHit2D hit = Physics2D.Raycast(worldpoint, Vector2.zero);
 
-            if(hit.collider != null)
+            if (hit.collider != null)
             {
                 //Add the clicked dots point value.
                 score += hit.collider.gameObject.GetComponent<Dot>().point_value;
@@ -65,8 +86,12 @@ public class GameLogic : MonoBehaviour
             //Rest the timer.
             dot_timer = time_between_spawns;
 
-            //Spawn a dot.
-            SpawnDot();
+            //Spawn dots.
+            for(int i = 0; i <= 2; i++)
+            {
+                SpawnDot();
+            }
+            
         }
 
     }
@@ -84,5 +109,12 @@ public class GameLogic : MonoBehaviour
 
         //Move new dot to new spawn point.
         new_dot.transform.position = spawn_point;
+    }
+
+    public void RestartGame()
+    {
+        //Reloads the current scene, restarting the game.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 }
